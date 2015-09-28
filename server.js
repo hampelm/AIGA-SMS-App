@@ -15,3 +15,7 @@ var server = app.listen(3000, function () {
 app.get('/AIGA', function (req, res) {
   res.send('Hello World!');
 });
+
+app.get('/sms', function (req, res) {
+  res.send('Sms will arrive here.');
+});
