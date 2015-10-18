@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 require('dotenv').load();
+var textit = require('src/textit');
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -28,6 +29,28 @@ app.get('/sms', function (req, res) {
 });
 
 app.post('/nexmo', function (req, res, body) {
-  console.log(req.body.phone);
-  res.send('Sms will arrive here.');
+  console.log("Received message from nexmo:", req.body);
+
+  textit.createContact({
+    phone: req.body.phone
+  }, function(error, response) {
+    // Start the flow for the user
+
+  })
+
+  req.send(201);
 });
+
+
+app.post('/textit', function (req, res, body) {
+  console.log("Received new stage from textit:", req.body);
+
+
+  // Update constant contact
+  // Find contact
+  // Create if not found
+  // Set values if found
+
+  req.send(201);
+});
+

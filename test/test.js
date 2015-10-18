@@ -9,6 +9,8 @@ var app = require(__dirname + '/../server.js');
 var PORT = 3212;
 var BASE = 'http://0.0.0.0:3212';
 
+// TODO https://www.npmjs.com/package/test-console
+
 describe('app', function() {
 
   before(function(done) {
@@ -29,8 +31,8 @@ describe('app', function() {
     });
   });
 
-  it('should accept a textit flow request', function(done) {
-    should.exist(false);
+  it('should be able to start a textit flow', function(done) {
+    // Create flow
   });
 
   it('should be able to send data to constant contact', function(done) {
