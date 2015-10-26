@@ -28,14 +28,17 @@ app.get('/', function (req, res) {
 });
 
 app.post('/textit', urlencodedParser, function (req, res, body) {
-  console.log("Received new stage from textit:", req, req.body);
+  console.log("Received new stage from textit:", req.body);
 
   // Skip flows we don't recognize.
   if (! _.includes(settings.flowIds, req.body.flow)) {
     console.log("Encountered unknown flow", req.body.flow);
-    res.send(200);
+    res.sendStatus(200);
     return;
   }
+
+  var responses = textit.parseValues(req.body.values);
+  console.log("Using responses", responses);
 
   // Values is an array!
   // var values = req.body.values;
@@ -65,7 +68,7 @@ app.post('/nexmo', function (req, res, body) {
   })
   */
 
-  res.send(501);
+  res.sendStatus(501);
 });
 
 module.exports = server;

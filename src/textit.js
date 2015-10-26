@@ -1,10 +1,22 @@
 /*jslint node: true */
 'use strict';
 
+// Libraries
+var _ = require('lodash');
 var request = require('request');
 
 var textit = module.exports;
 
+/* Parse values from a flow */
+textit.parseValues = function(values) {
+  values = JSON.parse(values);
+  var responses = {};
+  _.each(values, function(value) {
+    responses[value.label] = value;
+  });
+
+  return responses;
+};
 
 textit.createContact = function(options, done) {
   request.post({
