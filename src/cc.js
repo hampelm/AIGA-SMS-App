@@ -35,7 +35,7 @@ cc.findContact = function(options, done) {
 };
 
 // http://developer.constantcontact.com/docs/contacts-api/contacts-collection.html?method=POST
-cc.modifyContact = function(contact, options, done) {
+cc.updateContact = function(contact, options, done) {
 
   // Add contact to the given list
   contact.lists.push({
