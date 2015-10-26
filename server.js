@@ -5,6 +5,7 @@ require('dotenv').load();
 var _ = require('lodash');
 
 // Project
+var cc = require('./src/cc');
 var settings = require('./settings');
 var textit = require('./src/textit');
 
@@ -32,26 +33,25 @@ app.post('/textit', urlencodedParser, function (req, res, body) {
 
   // Skip flows we don't recognize.
   if (! _.includes(settings.flowIds, req.body.flow)) {
-    console.log("Encountered unknown flow", req.body.flow);
+    console.log("Aborting: encountered unknown flow", req.body.flow);
     res.sendStatus(200);
     return;
   }
 
+  // Get the values we need
   var responses = textit.parseValues(req.body.values);
   console.log("Using responses", responses);
 
-  // Values is an array!
-  // var values = req.body.values;
-  // var email = values.email_1;
-  // var name = values.name1;
+  // Create the contact
+  cc.addContact({
+    email: responses['Email 1'].value
+  }, function(error, response) {
+    if (error) {
+      res.sendStatus(500);
+    }
 
-
-  // Update constant contact
-  // Find contact
-  // Create if not found
-  // Set values if found
-
-  res.send(201);
+    res.sendStatus(201);
+  });
 });
 
 // TODO

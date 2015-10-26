@@ -1,7 +1,11 @@
 /*jslint node: true */
 'use strict';
 
+// Libraries
 var request = require('request');
+
+// Local
+var settings = require('../settings');
 
 var cc = module.exports;
 
@@ -45,7 +49,7 @@ cc.addContact = function(options, done) {
     },
     json: {
       lists: [{
-        id: '1'
+        id: settings.ccListId
       }],
       email_addresses: [{
         email_address: options.email
@@ -56,6 +60,7 @@ cc.addContact = function(options, done) {
       console.error('Error updating a contact on constant Contact: ', error);
     }
 
+    console.log("Response from cc", body);
     done(error, response);
   });
 };
