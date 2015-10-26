@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/textit', function (req, res, body) {
-  console.log("Received new stage from textit:", req.body);
+  console.log("Received new stage from textit:", req, req.body);
 
   // Skip flows we don't recognize.
   if (! _.includes(settings.flowIds, req.body.flow)) {
