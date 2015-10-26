@@ -12,8 +12,8 @@ var textit = require('./src/textit');
 var app = express();
 var port = process.env.PORT || 3000;
 
-app.use( bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({extended: true});
 
 var server = app.listen(port, function () {
   var host = server.address().address;
@@ -27,7 +27,7 @@ app.get('/', function (req, res) {
   res.send('ok');
 });
 
-app.post('/textit', function (req, res, body) {
+app.post('/textit', urlencodedParser, function (req, res, body) {
   console.log("Received new stage from textit:", req, req.body);
 
   // Skip flows we don't recognize.
