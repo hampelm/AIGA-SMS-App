@@ -1,4 +1,4 @@
-# Installin the server
+# Installing the server
 
 1. Install dependencies: `npm install`
 2. Configure the app:
@@ -8,3 +8,7 @@
 # Running the Server
 
 `node server`
+
+# Tests
+
+`mocha test` to run tests
