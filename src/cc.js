@@ -49,6 +49,10 @@ cc.addContact = function(options, done) {
     data.home_phone = options.phone;
   }
 
+  if(options.name) {
+    data.first_name = options.name;
+  }
+
   request.post({
     url: 'https://api.constantcontact.com/v2/contacts',
     headers: {

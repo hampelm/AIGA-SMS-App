@@ -40,12 +40,14 @@ app.post('/textit', urlencodedParser, function (req, res, body) {
 
   // Get the values we need
   var responses = textit.parseValues(req.body.values);
+  console.log("Using body", req.body);
   console.log("Using responses", responses);
 
   // Create the contact
   cc.addContact({
     email: responses['Email 1'].value,
-    phone: req.body.phone
+    phone: req.body.phone,
+    name: responses.Name1
   }, function(error, response) {
     if (error) {
       res.sendStatus(500);
