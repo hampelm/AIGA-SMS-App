@@ -1,7 +1,7 @@
 // Libraries
-var express = require('express');
 var bodyParser = require('body-parser');
 require('dotenv').load();
+var express = require('express');
 var _ = require('lodash');
 
 // Project
