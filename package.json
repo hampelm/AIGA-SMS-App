@@ -12,7 +12,8 @@
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "request": "~2.65.0",
-    "dotenv": "~1.2.0"
+    "dotenv": "~1.2.0",
+    "lodash": "~3.10.1"
   },
   "devDependencies": {
     "should": "~7.1.0",

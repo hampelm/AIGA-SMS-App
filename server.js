@@ -1,49 +1,46 @@
+// Libraries
 var express = require('express');
 var bodyParser = require('body-parser');
 require('dotenv').load();
-var textit = require('src/textit');
+var _ = require('lodash');
 
+// Project
+var settings = require('./settings');
+var textit = require('./src/textit');
+
+// Set up and srart the server
 var app = express();
 var port = process.env.PORT || 3000;
 
 app.use( bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
-
 var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('App listening at http://%s:%s', host, port);
 });
 
-app.get('/AIGA', function (req, res) {
-  res.send('Hello World!');
+// Routes
+app.get('/', function (req, res) {
+  res.send('ok');
 });
-
-app.get('/sms', function (req, res) {
-  res.send('Sms will arrive here.');
-});
-
-app.post('/nexmo', function (req, res, body) {
-  console.log("Received message from nexmo:", req.body);
-
-  textit.createContact({
-    phone: req.body.phone
-  }, function(error, response) {
-    // Start the flow for the user
-
-  })
-
-  req.send(201);
-});
-
 
 app.post('/textit', function (req, res, body) {
   console.log("Received new stage from textit:", req.body);
+
+  // Skip flows we don't recognize.
+  if (! _.includes(settings.flowIds, req.body.flow)) {
+    console.log("Encountered unknown flow", req.body.flow);
+    req.send(200);
+    return;
+  }
+
+  // Values is an array!
+  // var values = req.body.values;
+  // var email = values.email_1;
+  // var name = values.name1;
 
 
   // Update constant contact
@@ -54,3 +51,19 @@ app.post('/textit', function (req, res, body) {
   req.send(201);
 });
 
+// TODO
+// Nexmo endpoint
+app.post('/nexmo', function (req, res, body) {
+  console.log("Received message from nexmo:", req.body);
+
+  /*
+  textit.createContact({
+    phone: req.body.phone
+  }, function(error, response) {
+    // Start the flow for the user
+
+  })
+  */
+
+  req.send(501);
+});

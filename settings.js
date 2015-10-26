@@ -2,3 +2,7 @@
 'use strict';
 
 var settings = module.exports;
+
+// ID of the textit flows we should listen to
+settings.flowIds = ['36384'];
+
