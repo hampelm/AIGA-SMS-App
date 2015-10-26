@@ -1,10 +1,11 @@
 // Libraries
-var express = require('express');
 var bodyParser = require('body-parser');
 require('dotenv').load();
+var express = require('express');
 var _ = require('lodash');
 
 // Project
+var cc = require('./src/cc');
 var settings = require('./settings');
 var textit = require('./src/textit');
 
@@ -28,27 +29,30 @@ app.get('/', function (req, res) {
 });
 
 app.post('/textit', urlencodedParser, function (req, res, body) {
-  console.log("Received new stage from textit:", req, req.body);
+  console.log("Received new stage from textit:", req.body);
 
   // Skip flows we don't recognize.
   if (! _.includes(settings.flowIds, req.body.flow)) {
-    console.log("Encountered unknown flow", req.body.flow);
-    res.send(200);
+    console.log("Aborting: encountered unknown flow", req.body.flow);
+    res.sendStatus(500);
     return;
   }
 
-  // Values is an array!
-  // var values = req.body.values;
-  // var email = values.email_1;
-  // var name = values.name1;
+  // Get the values we need
+  var responses = textit.parseValues(req.body.values);
+  console.log("Using responses", responses);
 
+  // Create the contact
+  cc.addContact({
+    email: responses['Email 1'].value,
+    phone: req.body.phone
+  }, function(error, response) {
+    if (error) {
+      res.sendStatus(500);
+    }
 
-  // Update constant contact
-  // Find contact
-  // Create if not found
-  // Set values if found
-
-  res.send(201);
+    res.sendStatus(201);
+  });
 });
 
 // TODO
@@ -65,7 +69,7 @@ app.post('/nexmo', function (req, res, body) {
   })
   */
 
-  res.send(501);
+  res.sendStatus(501);
 });
 
 module.exports = server;
