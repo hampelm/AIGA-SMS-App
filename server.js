@@ -43,18 +43,32 @@ app.post('/textit', urlencodedParser, function (req, res, body) {
   console.log("Using body", req.body);
   console.log("Using responses", responses);
 
-  // Create the contact
-  cc.addContact({
-    email: responses['Email 1'].value,
-    phone: req.body.phone,
-    name: responses.Name1.value
+  cc.findContact({
+    email: responses['Email 1'].value
   }, function(error, response) {
     if (error) {
       res.sendStatus(500);
     }
 
-    res.sendStatus(201);
+    if (response.length === 0) {
+      // Create the contact
+      cc.addContact({
+        email: responses['Email 1'].value,
+        phone: req.body.phone,
+        name: responses.Name1.value
+      }, function(error, response) {
+        if (error) {
+          res.sendStatus(500);
+        }
+
+        res.sendStatus(201);
+      });
+    } else {
+      // Update the contact if it doesn't exist
+      console.log("TODO: user already exists", response);
+    }
   });
+
 });
 
 // TODO
