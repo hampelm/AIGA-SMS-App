@@ -7,46 +7,53 @@ var cc = module.exports;
 
 cc.findContact = function(options, done) {
   request.get({
-    url: '/api/v1/contacts.json',
-    json: {
-      limit: 500
+    url: 'https://api.constantcontact.com/v2/contacts',
+    qs: {
+      email: options.email,
+      status: 'ALL',
+      limit: 1,
+      api_key: process.env.CC_KEY
+    },
+    auth: {
+      bearer: process.env.CC_TOKEN
     }
   }, function(error, response, body) {
-    if(error) {
+    body = JSON.parse(body);
+
+    if (error) {
       console.error("Error getting contacts: ", error);
+      return done(error);
     }
 
-    var contact _.find(results, {
-      criteria: options.criteria
-    });
-
-    if (contact) {
-      done(error, response);
-      return;
-    }
-
-    if (meta.pagination.next_link) {
-      // Follow the next link
-    } else {
-      return "not found.";
-    }
-
+    done(undefined, body.results);
   });
 };
 
-cc.createContact = function() {
-
-};
-
-// https://developer.constantcontact.com/docs/contacts-api/contacts-resource.html?method=PUT
-cc.updateContact = function(options, done) {
-  request.put({
-    url: '/api/v1/contacts.json',
+// http://developer.constantcontact.com/docs/contacts-api/contacts-collection.html?method=POST
+cc.addContact = function(options, done) {
+  request.post({
+    url: 'https://api.constantcontact.com/v2/contacts',
+    headers: {
+      'content-type': 'application/json'
+    },
+    auth: {
+      bearer: process.env.CC_TOKEN
+    },
+    qs: {
+      action_by: 'ACTION_BY_VISITOR',
+      api_key: process.env.CC_KEY
+    },
     json: {
+      lists: [{
+        id: '1'
+      }],
+      email_addresses: [{
+        email_address: options.email
+      }]
     }
   }, function(error, response, body) {
     if(error) {
-      console.error("Error updating a contact on constant Contact: ", error);
+      console.error('Error updating a contact on constant Contact: ', error);
     }
 
     done(error, response);

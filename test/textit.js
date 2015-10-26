@@ -15,7 +15,7 @@ var sampleTextitValues = '[{"category": {"base": "English"}, "node": "23b7de6b-f
 
 // TODO https://www.npmjs.com/package/test-console
 
-describe('textit', function() {
+describe('TextIt', function() {
 
   before(function(done) {
     // server = require(__dirname + '/../server.js');
