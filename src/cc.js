@@ -38,7 +38,7 @@ cc.addContact = function(options, done) {
 
   var data = {
     lists: [{
-      id: settings.ccListId
+      id: process.env.CCLISTID
     }],
     email_addresses: [{
       email_address: options.email
