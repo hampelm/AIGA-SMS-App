@@ -67,3 +67,5 @@ app.post('/nexmo', function (req, res, body) {
 
   req.send(501);
 });
+
+module.exports = server;

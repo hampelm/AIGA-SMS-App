@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "repository": "git@github.com:hampelm/AIGA-SMS-App.git",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Megan Marini & Matt Hampel",
   "license": "BSD",
@@ -16,7 +17,8 @@
     "lodash": "~3.10.1"
   },
   "devDependencies": {
+    "mocha": "~2.3.3",
     "should": "~7.1.0",
-    "mocha": "~2.3.3"
+    "supertest": "^1.1.0"
   }
 }
