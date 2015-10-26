@@ -29,7 +29,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/textit', urlencodedParser, function (req, res, body) {
-  console.log("Received new stage from textit:", req.body);
+  console.log("Received new stage from textit:", body);
 
   // Skip flows we don't recognize.
   if (! _.includes(settings.flowIds, req.body.flow)) {
@@ -40,7 +40,6 @@ app.post('/textit', urlencodedParser, function (req, res, body) {
 
   // Get the values we need
   var responses = textit.parseValues(req.body.values);
-  console.log("Using body", req.body);
 
   cc.findContact({
     email: responses['Email 1'].value
