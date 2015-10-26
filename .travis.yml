@@ -3,5 +3,4 @@ node_js:
   - "4.0"
 sudo: false
 env:
-- CC_KEY=fake_cc_key
-- CC_TOKEN=fake_cc_token
+- CC_KEY=fake_cc_key CC_TOKEN=fake_cc_token

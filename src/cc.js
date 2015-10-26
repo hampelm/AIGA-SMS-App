@@ -57,7 +57,7 @@ cc.addContact = function(options, done) {
     }
   }, function(error, response, body) {
     if(error) {
-      console.error('Error updating a contact on constant Contact: ', error);
+      console.error('Error adding a contact on Constant Contact: ', error);
     }
 
     console.log("Response from cc", body);

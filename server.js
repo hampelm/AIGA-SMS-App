@@ -34,7 +34,7 @@ app.post('/textit', urlencodedParser, function (req, res, body) {
   // Skip flows we don't recognize.
   if (! _.includes(settings.flowIds, req.body.flow)) {
     console.log("Aborting: encountered unknown flow", req.body.flow);
-    res.sendStatus(200);
+    res.sendStatus(500);
     return;
   }
 
