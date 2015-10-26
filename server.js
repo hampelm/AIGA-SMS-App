@@ -33,7 +33,7 @@ app.post('/textit', function (req, res, body) {
   // Skip flows we don't recognize.
   if (! _.includes(settings.flowIds, req.body.flow)) {
     console.log("Encountered unknown flow", req.body.flow);
-    req.send(200);
+    res.send(200);
     return;
   }
 
@@ -48,7 +48,7 @@ app.post('/textit', function (req, res, body) {
   // Create if not found
   // Set values if found
 
-  req.send(201);
+  res.send(201);
 });
 
 // TODO
@@ -65,7 +65,7 @@ app.post('/nexmo', function (req, res, body) {
   })
   */
 
-  req.send(501);
+  res.send(501);
 });
 
 module.exports = server;
