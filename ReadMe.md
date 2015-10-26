@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hampelm/AIGA-SMS-App.svg)
+
 # Installing the server
 
 1. Install dependencies: `npm install`
@@ -12,3 +14,4 @@
 # Tests
 
 `mocha test` to run tests
+
