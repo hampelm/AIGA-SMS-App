@@ -20,7 +20,7 @@ describe('Constant Contact', function() {
     done();
   });
 
-  it('should find a user that exists', function(done) {
+  it.skip('should find a user that exists', function(done) {
     cc.findContact({
       email: 'matth@localdata.com'
     }, function(error, response) {
@@ -30,7 +30,7 @@ describe('Constant Contact', function() {
     });
   });
 
-  it("should not find a user that doesn't exist", function(done) {
+  it.skip("should not find a user that doesn't exist", function(done) {
     cc.findContact({
       email: 'foobarbaz@localdata.com'
     }, function(error, response) {
@@ -40,6 +40,8 @@ describe('Constant Contact', function() {
   });
 
   it("should create a user", function(done) {
+    var fakeEmail = 'doesnotexist@localdata.com';
+
     var fakeConstantContact = nock('https://api.constantcontact.com')
       .filteringPath(/api_key=[^&]*/g, 'api_key=XXX')
       .filteringRequestBody(function(body) {
@@ -47,14 +49,16 @@ describe('Constant Contact', function() {
       })
       .post('/v2/contacts?action_by=ACTION_BY_VISITOR&api_key=XXX', '*')
       .reply(201, function(uri, requestBody) {
-        console.log("Got request body creating a user:", requestBody);
+        requestBody = JSON.parse(requestBody);
+        should.exist(requestBody.lists);
+        requestBody.email_addresses[0].email_address.should.equal(fakeEmail);
+        done();
       });
 
     cc.addContact({
-      email: 'doesnotexist@localdata.com'
+      email: fakeEmail
     }, function(error, response) {
-      console.log("Got create user results:", response);
-      done();
+      return null;
     });
   });
 
