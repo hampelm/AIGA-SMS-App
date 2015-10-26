@@ -35,6 +35,20 @@ cc.findContact = function(options, done) {
 
 // http://developer.constantcontact.com/docs/contacts-api/contacts-collection.html?method=POST
 cc.addContact = function(options, done) {
+
+  var data = {
+    lists: [{
+      id: settings.ccListId
+    }],
+    email_addresses: [{
+      email_address: options.email
+    }]
+  };
+
+  if (options.phone) {
+    data.home_phone = options.phone;
+  }
+
   request.post({
     url: 'https://api.constantcontact.com/v2/contacts',
     headers: {
@@ -47,20 +61,12 @@ cc.addContact = function(options, done) {
       action_by: 'ACTION_BY_VISITOR',
       api_key: process.env.CC_KEY
     },
-    json: {
-      lists: [{
-        id: settings.ccListId
-      }],
-      email_addresses: [{
-        email_address: options.email
-      }]
-    }
+    json: data
   }, function(error, response, body) {
     if(error) {
       console.error('Error adding a contact on Constant Contact: ', error);
     }
 
-    console.log("Response from cc", body);
     done(error, response);
   });
 };

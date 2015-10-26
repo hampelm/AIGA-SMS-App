@@ -44,7 +44,8 @@ app.post('/textit', urlencodedParser, function (req, res, body) {
 
   // Create the contact
   cc.addContact({
-    email: responses['Email 1'].value
+    email: responses['Email 1'].value,
+    phone: req.body.phone
   }, function(error, response) {
     if (error) {
       res.sendStatus(500);
