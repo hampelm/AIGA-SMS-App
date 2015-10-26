@@ -35,6 +35,41 @@ cc.findContact = function(options, done) {
 };
 
 // http://developer.constantcontact.com/docs/contacts-api/contacts-collection.html?method=POST
+cc.modifyContact = function(contact, options, done) {
+
+  // Add contact to the given list
+  contact.lists.push({
+      id: process.env.CCLISTID
+  });
+
+  if (options.phone) {
+    contact.cell_phone = options.phone;
+  }
+
+  request.post({
+    url: 'https://api.constantcontact.com/v2/contacts/' + contact.id + '/',
+    headers: {
+      'content-type': 'application/json'
+    },
+    auth: {
+      bearer: process.env.CC_TOKEN
+    },
+    qs: {
+      action_by: 'ACTION_BY_VISITOR',
+      api_key: process.env.CC_KEY
+    },
+    json: contact
+  }, function(error, response, body) {
+    if(error) {
+      console.error('Error updating a contact on Constant Contact: ', error);
+    }
+
+    console.log("Finished attempt to update user", response);
+    done(error, response);
+  });
+};
+
+// http://developer.constantcontact.com/docs/contacts-api/contacts-collection.html?method=POST
 cc.addContact = function(options, done) {
 
   var data = {
@@ -47,7 +82,7 @@ cc.addContact = function(options, done) {
   };
 
   if (options.phone) {
-    data.home_phone = options.phone;
+    data.cell_phone = options.phone;
   }
 
   if(options.name) {
