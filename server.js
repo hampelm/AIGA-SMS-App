@@ -41,7 +41,6 @@ app.post('/textit', urlencodedParser, function (req, res, body) {
   // Get the values we need
   var responses = textit.parseValues(req.body.values);
   console.log("Using body", req.body);
-  console.log("Using responses", responses);
 
   cc.findContact({
     email: responses['Email 1'].value

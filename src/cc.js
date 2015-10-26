@@ -29,6 +29,7 @@ cc.findContact = function(options, done) {
       return done(error);
     }
 
+    console.log("Found contact?", body);
     done(undefined, body.results);
   });
 };
@@ -71,6 +72,7 @@ cc.addContact = function(options, done) {
       console.error('Error adding a contact on Constant Contact: ', error);
     }
 
+    console.log("Finished attempt to add user", response);
     done(error, response);
   });
 };
